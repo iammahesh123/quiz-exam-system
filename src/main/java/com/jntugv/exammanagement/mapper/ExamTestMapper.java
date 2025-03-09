@@ -1,6 +1,6 @@
 package com.jntugv.exammanagement.mapper;
 
-import com.jntugv.exammanagement.entity.ExamTest;
+import com.jntugv.exammanagement.entity.QuizTest;
 import com.jntugv.exammanagement.model.ExamTestResponseDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -13,7 +13,7 @@ public class ExamTestMapper {
         this.modelMapper = modelMapper;
     }
 
-    public ExamTestResponseDTO toDO(ExamTest test) {
+    public ExamTestResponseDTO toDO(QuizTest test) {
         return modelMapper.map(test, ExamTestResponseDTO.class);
     }
 }

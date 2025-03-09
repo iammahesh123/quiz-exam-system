@@ -3,6 +3,7 @@ package com.jntugv.exammanagement.controller;
 import com.jntugv.exammanagement.model.ExamTestRequestDTO;
 import com.jntugv.exammanagement.model.ExamTestResponseDTO;
 import com.jntugv.exammanagement.service.ExamTestService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/exam-tests")
+@Tag(name = "ExamTest Rest Services", description = "List of ExamTest Rest Services")
 public class ExamTestController {
 
     private final ExamTestService examTestService;

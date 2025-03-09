@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TestQuestions {
+public class Questions {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +33,7 @@ public class TestQuestions {
 
     @ManyToOne
     @JoinColumn(name = "exam_test_id")
-    private ExamTest examTest;
+    private QuizTest quizTest;
 
     @PostPersist
     public void generateSupplierNumber() {

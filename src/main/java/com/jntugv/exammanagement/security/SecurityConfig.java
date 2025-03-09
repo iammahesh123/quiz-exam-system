@@ -33,7 +33,7 @@ public class SecurityConfig {
                         "/swagger-ui.html",
                         "/v3/api-docs.yaml"
                 ).permitAll()
-                .requestMatchers("/auth/login", "/auth/register").permitAll()
+                .requestMatchers("/auth/login", "/auth/register","auth/update-profile").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/teacher/**").hasRole("TEACHER")
                 .requestMatchers("/student/**").hasRole("STUDENT")

@@ -1,73 +1,47 @@
 package com.jntugv.exammanagement.controller;
 
-import com.jntugv.exammanagement.entity.User;
 import com.jntugv.exammanagement.model.AuthResponseDTO;
 import com.jntugv.exammanagement.model.LoginDTO;
 import com.jntugv.exammanagement.model.UserDTO;
-import com.jntugv.exammanagement.repository.UserRepository;
-import com.jntugv.exammanagement.security.JwtUtil;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import com.jntugv.exammanagement.model.UserResponseDTO;
+import com.jntugv.exammanagement.service.AuthService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
+@Tag(name = "Auth Rest Services", description = "List of Auth Rest Services")
 public class AuthController {
-    private final AuthenticationManager authenticationManager;
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtUtil jwtUtil;
-    private final UserDetailsService userDetailsService;
+    private final AuthService authService;
 
-    public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil, UserDetailsService userDetailsService) {
-        this.authenticationManager = authenticationManager;
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtUtil = jwtUtil;
-        this.userDetailsService = userDetailsService;
+    public AuthController(AuthService authService) {
+        this.authService = authService;
     }
 
     @PostMapping("/register")
-    public String register(@RequestBody UserDTO userDTO) {
-        if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
-            return "Email already exists!";
-        }
-
-        User user = new User();
-        user.setFullName(userDTO.getFullName());
-        user.setEmail(userDTO.getEmail());
-        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-        user.setRole(userDTO.getRole());
-        userRepository.save(user);
-
-        return "User registered successfully!";
+    public ResponseEntity<String> register(@RequestBody UserDTO userDTO) {
+        return ResponseEntity.ok(authService.register(userDTO));
     }
 
     @PostMapping("/login")
-    public AuthResponseDTO login(@RequestBody LoginDTO loginDTO) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword()));
-        UserDetails userDetails = userDetailsService.loadUserByUsername(loginDTO.getEmail());
-        String token = jwtUtil.generateToken(userDetails);
-
-        User user = userRepository.findByEmail(loginDTO.getEmail()).orElseThrow();
-        return new AuthResponseDTO(token, user.getRole().name());
+    public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginDTO loginDTO) {
+        return ResponseEntity.ok(authService.login(loginDTO));
     }
 
     @PutMapping("/update-profile")
-    public String updateProfile(@RequestHeader("Authorization") String token, @RequestBody UserDTO userDTO) {
-        String email = jwtUtil.extractUsername(token.substring(7));
-        User user = userRepository.findByEmail(email).orElseThrow();
+    public ResponseEntity<UserResponseDTO> updateProfile(@RequestHeader("Authorization") String token, @RequestBody UserDTO userDTO) {
+        return ResponseEntity.ok(authService.updateProfile(token, userDTO));
+    }
 
-        user.setFullName(userDTO.getFullName());
-        user.setPhoneNumber(userDTO.getPhoneNumber());
-        user.setAddress(userDTO.getAddress());
-        //user.setDepartment(userDTO.getDepartment());
+    @PostMapping("/forgot-password")
+    public ResponseEntity<String> forgotPassword(@RequestParam String email) {
+        return ResponseEntity.ok(authService.sendPasswordResetToken(email));
+    }
 
-        userRepository.save(user);
-        return "Profile updated successfully!";
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(@RequestParam String token, @RequestParam String newPassword) {
+        return ResponseEntity.ok(authService.resetPassword(token, newPassword));
     }
 }
 

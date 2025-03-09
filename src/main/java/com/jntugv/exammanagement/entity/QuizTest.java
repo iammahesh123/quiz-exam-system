@@ -15,7 +15,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ExamTest {
+public class QuizTest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -30,6 +30,10 @@ public class ExamTest {
     private String facultyName;
     private long totalQuestions;
 
-    @OneToMany(mappedBy = "examTest",orphanRemoval = true,fetch = FetchType.LAZY)
-    private List<TestQuestions> questions = new ArrayList<>();
+    @OneToMany(mappedBy = "quizTest",orphanRemoval = true,fetch = FetchType.LAZY)
+    private List<Questions> questions = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "quiz_test_id")
+    private User user;
 }

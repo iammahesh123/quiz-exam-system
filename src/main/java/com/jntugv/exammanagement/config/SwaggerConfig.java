@@ -19,9 +19,9 @@ public class SwaggerConfig {
                         new SecurityScheme().name(securitySchemeName).type(SecurityScheme.Type.HTTP).scheme("bearer")
                                 .bearerFormat("JWT")))
                 .info(new Info()
-                        .title("Exam Management API")
+                        .title("Quiz Management System API's")
                         .version("1.0")
-                        .description("API documentation for Exam Management System"));
+                        .description("API documentation for Quiz Management System"));
     }
 }
 

@@ -25,6 +25,14 @@ public class SecurityConfig {
         http
                 .csrf().disable()
                 .authorizeHttpRequests()
+                .requestMatchers(
+                        "/auth/login",
+                        "/auth/register",
+                        "/v3/api-docs/**",
+                        "/swagger-ui/**",
+                        "/swagger-ui.html",
+                        "/v3/api-docs.yaml"
+                ).permitAll()
                 .requestMatchers("/auth/login", "/auth/register").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/teacher/**").hasRole("TEACHER")

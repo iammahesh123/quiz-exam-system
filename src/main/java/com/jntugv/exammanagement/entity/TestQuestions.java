@@ -1,9 +1,12 @@
 package com.jntugv.exammanagement.entity;
 
+import com.jntugv.exammanagement.enums.QuestionType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -21,6 +24,12 @@ public class TestQuestions {
     private long year;
     private long questionmarks;
     private String semister;
+
+    @ElementCollection
+    private List<String> options;
+
+    @Enumerated(EnumType.STRING)
+    private QuestionType type;
 
     @ManyToOne
     @JoinColumn(name = "exam_test_id")
@@ -95,6 +104,30 @@ public class TestQuestions {
 
     public void setSemister(String semister) {
         this.semister = semister;
+    }
+
+    public List<String> getOptions() {
+        return options;
+    }
+
+    public void setOptions(List<String> options) {
+        this.options = options;
+    }
+
+    public QuestionType getType() {
+        return type;
+    }
+
+    public void setType(QuestionType type) {
+        this.type = type;
+    }
+
+    public ExamTest getExamTest() {
+        return examTest;
+    }
+
+    public void setExamTest(ExamTest examTest) {
+        this.examTest = examTest;
     }
 }
 

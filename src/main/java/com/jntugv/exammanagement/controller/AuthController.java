@@ -64,7 +64,7 @@ public class AuthController {
         user.setFullName(userDTO.getFullName());
         user.setPhoneNumber(userDTO.getPhoneNumber());
         user.setAddress(userDTO.getAddress());
-        user.setDepartment(userDTO.getDepartment());
+        //user.setDepartment(userDTO.getDepartment());
 
         userRepository.save(user);
         return "Profile updated successfully!";

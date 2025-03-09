@@ -3,8 +3,7 @@ package com.jntugv.exammanagement.controller;
 import com.jntugv.exammanagement.model.QuestionRequestDTO;
 import com.jntugv.exammanagement.model.QuestionResponseDTO;
 import com.jntugv.exammanagement.service.QuestionService;
-import org.hibernate.annotations.Parameter;
-import org.springframework.data.domain.Page;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/student")
+@Tag(name = "Question Rest Services", description = "List of Question Rest Services")
 public class QuestionController {
 
     private final QuestionService questionService;

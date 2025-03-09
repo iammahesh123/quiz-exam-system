@@ -1,6 +1,8 @@
 package com.jntugv.exammanagement.security;
 
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -52,5 +54,22 @@ public class JwtUtil {
                 .parseClaimsJws(token)
                 .getBody();
     }
-}
 
+    public String generatePasswordResetToken(String email) {
+        return Jwts.builder()
+                .setSubject(email)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + (1000 * 60 * 15)))
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    public String extractEmailFromResetToken(String token) {
+        return extractClaim(token, Claims::getSubject);
+    }
+
+    public boolean validateResetToken(String token, String email) {
+        final String extractedEmail = extractEmailFromResetToken(token);
+        return (extractedEmail.equals(email) && !isTokenExpired(token));
+    }
+}

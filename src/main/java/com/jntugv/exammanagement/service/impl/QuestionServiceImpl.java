@@ -1,6 +1,6 @@
 package com.jntugv.exammanagement.service.impl;
 
-import com.jntugv.exammanagement.entity.TestQuestions;
+import com.jntugv.exammanagement.entity.Questions;
 import com.jntugv.exammanagement.mapper.QuestionMapper;
 import com.jntugv.exammanagement.model.QuestionRequestDTO;
 import com.jntugv.exammanagement.model.QuestionResponseDTO;
@@ -29,38 +29,38 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public QuestionResponseDTO createQuestion(QuestionRequestDTO questionRequestDTO) {
-        TestQuestions testQuestions = new TestQuestions();
-        BeanUtils.copyProperties(questionRequestDTO, testQuestions);
-        System.out.println(testQuestions);
-        questionRepository.save(testQuestions);
-        return questionMapper.toDTO(testQuestions);
+        Questions questions = new Questions();
+        BeanUtils.copyProperties(questionRequestDTO, questions);
+        System.out.println(questions);
+        questionRepository.save(questions);
+        return questionMapper.toDTO(questions);
 
     }
 
     @Override
     public QuestionResponseDTO updateQuestion(Long id,QuestionRequestDTO questionRequestDTO) {
-        TestQuestions testQuestions = questionRepository.findById(id).orElse(null);
-        BeanUtils.copyProperties(questionRequestDTO, testQuestions);
-        TestQuestions savedQuestion = questionRepository.save(testQuestions);
+        Questions questions = questionRepository.findById(id).orElse(null);
+        BeanUtils.copyProperties(questionRequestDTO, questions);
+        Questions savedQuestion = questionRepository.save(questions);
         return questionMapper.toDTO(savedQuestion);
     }
 
     @Override
     public QuestionResponseDTO deleteQuestion(Long id) {
-        TestQuestions testQuestions = questionRepository.findById(id).orElse(null);
-        questionRepository.delete(testQuestions);
-        return questionMapper.toDTO(testQuestions);
+        Questions questions = questionRepository.findById(id).orElse(null);
+        questionRepository.delete(questions);
+        return questionMapper.toDTO(questions);
     }
 
     @Override
     public QuestionResponseDTO getQuestion(Long id) {
-       TestQuestions testQuestions = questionRepository.findById(id).orElse(null);
-       return questionMapper.toDTO(testQuestions);
+       Questions questions = questionRepository.findById(id).orElse(null);
+       return questionMapper.toDTO(questions);
     }
 
     @Override
     public List<QuestionResponseDTO> getAllQuestions() {
-        List<TestQuestions> testQuestions = questionRepository.findAll();
-        return testQuestions.stream().map(testQuestion -> questionMapper.toDTO(testQuestion)).collect(Collectors.toList());
+        List<Questions> questions = questionRepository.findAll();
+        return questions.stream().map(testQuestion -> questionMapper.toDTO(testQuestion)).collect(Collectors.toList());
     }
 }

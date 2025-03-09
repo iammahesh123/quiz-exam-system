@@ -12,6 +12,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ExamTestServiceImpl implements ExamTestService {
@@ -40,21 +41,28 @@ public class ExamTestServiceImpl implements ExamTestService {
 
     @Override
     public ExamTestResponseDTO updateExamTest(Long id, ExamTestRequestDTO examTestRequestDTO) {
-        return null;
+        ExamTest examTest = examTestRepository.findById(id).orElse(null);
+        BeanUtils.copyProperties(examTestRequestDTO, examTest);
+        ExamTest savedTest = examTestRepository.save(examTest);
+        return examTestMapper.toDO(savedTest);
     }
 
     @Override
     public ExamTestResponseDTO getExamTestById(Long id) {
-        return null;
+        ExamTest examTest = examTestRepository.findById(id).orElse(null);
+        return examTestMapper.toDO(examTest);
     }
 
     @Override
     public List<ExamTestResponseDTO> getAllExamTests() {
-        return List.of();
+        List<ExamTest> examTests = examTestRepository.findAll();
+        return examTests.stream().map(test -> examTestMapper.toDO(test)).collect(Collectors.toList());
     }
 
     @Override
     public ExamTestResponseDTO deleteExamTest(Long id) {
-        return null;
+        ExamTest examTest = examTestRepository.findById(id).orElse(null);
+        examTestRepository.delete(examTest);
+        return examTestMapper.toDO(examTest);
     }
 }

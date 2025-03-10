@@ -9,6 +9,7 @@ import com.jntugv.exammanagement.repository.QuestionRepository;
 import com.jntugv.exammanagement.repository.QuizTestRepository;
 import com.jntugv.exammanagement.service.ExamTestService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -56,13 +57,13 @@ public class ExamTestServiceImpl implements ExamTestService {
     @Override
     public List<ExamTestResponseDTO> getAllExamTests() {
         List<QuizTest> quizTests = quizTestRepository.findAll();
-        return quizTests.stream().map(test -> examTestMapper.toDO(test)).collect(Collectors.toList());
+        return quizTests.stream().map(examTestMapper::toDO).collect(Collectors.toList());
     }
 
     @Override
-    public ExamTestResponseDTO deleteExamTest(Long id) {
+    public HttpStatus deleteExamTest(Long id) {
         QuizTest quizTest = quizTestRepository.findById(id).orElse(null);
         quizTestRepository.delete(quizTest);
-        return examTestMapper.toDO(quizTest);
+        return HttpStatus.OK;
     }
 }

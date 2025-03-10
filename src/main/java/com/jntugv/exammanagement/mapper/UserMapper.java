@@ -13,7 +13,14 @@ public class UserMapper {
         this.modelMapper = modelMapper;
     }
 
-   public UserResponseDTO toDTO(User userDTO) {
-        return modelMapper.map(userDTO, UserResponseDTO.class);
+   public UserResponseDTO toDTO(User user) {
+        UserResponseDTO userResponseDTO = modelMapper.map(user, UserResponseDTO.class);
+        if(user.getDepartment() != null) {
+            userResponseDTO.setDepartmentId(user.getDepartment().getId());
+        }
+        if(user.getBranch() != null) {
+            userResponseDTO.setBranchId(user.getBranch().getId());
+        }
+        return userResponseDTO;
     }
 }

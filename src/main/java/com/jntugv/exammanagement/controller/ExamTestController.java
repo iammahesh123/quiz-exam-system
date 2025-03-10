@@ -4,6 +4,7 @@ import com.jntugv.exammanagement.model.ExamTestRequestDTO;
 import com.jntugv.exammanagement.model.ExamTestResponseDTO;
 import com.jntugv.exammanagement.service.ExamTestService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,7 +44,7 @@ public class ExamTestController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ExamTestResponseDTO> deleteExamTest(@PathVariable("id") Long id) {
+    public ResponseEntity<HttpStatus> deleteExamTest(@PathVariable("id") Long id) {
         return ResponseEntity.ok(examTestService.deleteExamTest(id));
     }
 }

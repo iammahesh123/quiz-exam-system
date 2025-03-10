@@ -19,7 +19,7 @@ public class Department {
     private String contact;
     private String hodName;
 
-    @OneToOne
+    @OneToOne(optional = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 }

@@ -36,7 +36,7 @@ public class User implements UserDetails {
     private String phoneNumber;
     private String address;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,orphanRemoval = true)
     @JoinColumn(name = "department_id")
     private Department department;
 

@@ -72,4 +72,5 @@ public class JwtUtil {
         final String extractedEmail = extractEmailFromResetToken(token);
         return (extractedEmail.equals(email) && !isTokenExpired(token));
     }
+
 }

@@ -2,6 +2,7 @@ package com.jntugv.exammanagement.service;
 
 import com.jntugv.exammanagement.model.ExamTestRequestDTO;
 import com.jntugv.exammanagement.model.ExamTestResponseDTO;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,5 +13,5 @@ public interface ExamTestService {
     ExamTestResponseDTO updateExamTest(Long id,ExamTestRequestDTO examTestRequestDTO);
     ExamTestResponseDTO getExamTestById(Long id);
     List<ExamTestResponseDTO> getAllExamTests();
-    ExamTestResponseDTO deleteExamTest(Long id);
+    HttpStatus deleteExamTest(Long id);
 }

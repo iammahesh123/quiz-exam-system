@@ -114,4 +114,13 @@ public class AuthServiceImpl implements AuthService {
         userRepository.save(user);
         return "Password has been successfully reset.";
     }
+
+    @Override
+    public UserResponseDTO getProfile(String token) {
+        String email = jwtUtil.extractUsername(token.substring(7));
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("User not found!"));
+
+        return userMapper.toDTO(user);
+    }
 }

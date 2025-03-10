@@ -43,5 +43,10 @@ public class AuthController {
     public ResponseEntity<String> resetPassword(@RequestParam String token, @RequestParam String newPassword) {
         return ResponseEntity.ok(authService.resetPassword(token, newPassword));
     }
+
+    @GetMapping("/get-profile")
+    public ResponseEntity<UserResponseDTO> getProfile(@RequestHeader("Authorization") String token) {
+        return ResponseEntity.ok(authService.getProfile(token));
+    }
 }
 

@@ -13,4 +13,5 @@ public interface AuthService {
     UserResponseDTO updateProfile(String token, UserDTO userDTO);
     String sendPasswordResetToken(String email);
     String resetPassword(String token, String newPassword);
+    UserResponseDTO getProfile(String token);
 }

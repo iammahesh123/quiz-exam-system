@@ -1,5 +1,6 @@
 package com.jntugv.exammanagement.entity;
 
+import com.jntugv.exammanagement.audit.BaseEntity;
 import com.jntugv.exammanagement.enums.QuestionType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,7 +13,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Questions {
+public class Questions extends BaseEntity<String> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

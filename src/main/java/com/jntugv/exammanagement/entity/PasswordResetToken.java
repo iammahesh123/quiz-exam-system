@@ -1,5 +1,6 @@
 package com.jntugv.exammanagement.entity;
 
+import com.jntugv.exammanagement.audit.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PasswordResetToken {
+public class PasswordResetToken extends BaseEntity<String> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,5 +1,6 @@
 package com.jntugv.exammanagement.entity;
 
+import com.jntugv.exammanagement.audit.BaseEntity;
 import com.jntugv.exammanagement.enums.UserRoles;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -17,12 +18,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "users")
-public class User implements UserDetails {
+public class User extends BaseEntity<String> implements UserDetails  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String fullName;
 
     @Column(unique = true, nullable = false)
@@ -36,7 +36,7 @@ public class User implements UserDetails {
     private String phoneNumber;
     private String address;
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,orphanRemoval = true)
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "department_id")
     private Department department;
 
